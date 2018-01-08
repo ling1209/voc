@@ -778,6 +778,14 @@ class StrTests(TranspileTestCase):
         print(s1.splitlines(True))
         """)
 
+    def test_rmul(self):
+        self.assertCodeExecution(r"""
+        str1 = "aAbB567@"
+        tests = [1, 0, -1]
+        for i in tests:
+            print(i * str1)
+        """)
+
 
 class UnaryStrOperationTests(UnaryOperationTestCase, TranspileTestCase):
     data_type = 'str'

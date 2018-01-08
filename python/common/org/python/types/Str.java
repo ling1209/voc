@@ -502,7 +502,25 @@ public class Str extends org.python.types.Object {
             args = {"other"}
     )
     public org.python.Object __rmul__(org.python.Object other) {
-        throw new org.python.exceptions.NotImplementedError("__rmul__() has not been implemented.");
+                if (other instanceof org.python.types.Int) {
+            long other_int = ((org.python.types.Int) other).value;
+            if (other_int < 1) {
+                return new org.python.types.Str("");
+            }
+            java.lang.StringBuffer res = new java.lang.StringBuffer(value.length() * (int) other_int);
+            for (int i = 0; i < other_int; i++) {
+                res.append(value);
+            }
+            return new org.python.types.Str(res.toString());
+        } else if (other instanceof org.python.types.Bool) {
+            boolean other_bool = ((org.python.types.Bool) other).value;
+            if (other_bool) {
+                return new org.python.types.Str(value);
+            } else {
+                return new org.python.types.Str("");
+            }
+        }
+        throw new org.python.exceptions.TypeError("'" + other.typeName() + "' object cannot be interpreted as an integer");
     }
 
     @org.python.Method(
